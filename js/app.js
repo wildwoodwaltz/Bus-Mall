@@ -1,18 +1,21 @@
 // Global Variables
 
-let imgOne = document.getElementById(img-one);
-let imgTwo = document.getElementById(img-two);
-let imgThree = document.getElementById(img-three);
-let randNumberOne =[];
-let randNumberTwo=[];
-let randNumArrayOne=true;
+let imgOne = document.getElementById('img-one');
+let imgTwo = document.getElementById('img-two');
+let imgThree = document.getElementById('img-three');
+let results = document.getElementById('talley');
+let voteBox = document.getElementById('votebox');
+let randNumberOne = [NaN,NaN,NaN];
+let randNumberTwo = [NaN,NaN,NaN];
+let randNumArrayOne = true;
+let totalVotes = 0;
 
 //data storage
 let allItems = []
-let itemList = ['bag','banana','bathroom','boots','breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors','shark','tauntaun','unicorn', 'water-can','wine-glass']
+let itemList = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'unicorn', 'water-can', 'wine-glass']
 // Constructor
 
-function Items(itemName, fileExtension = 'jpg'){
+function Items(itemName, fileExtension = 'jpg') {
   this.itemName = itemName;
   this.src = `img/${itemName}.${fileExtension}`;
   this.alt = `${itemName}`;
@@ -22,108 +25,122 @@ function Items(itemName, fileExtension = 'jpg'){
 }
 
 //img list
-function renderNewItems(newItem);
-for (let i = 0; i < itemList.length; i++){
-  new Item = (itemList[i])
+function renderNewItems() {
+  for (let i = 0; i < itemList.length; i++) {
+    new Items(itemList[i])
+  }
 }
-new Item = (sweep, .png)
+renderNewItems();
+new Items('sweep', 'png')
+console.log(allItems)
 
-
-function getNumbers();
-  if (randNumArrayOne === true){
-    for (i = 0; i < 3; i++){
-   randNumberOne[i] = Math.floor(Math.random() * itemList.length -1);
+function getNumbers(){
+  if (randNumArrayOne === true) {
+    for (i = 0; i < 3; i++) {
+    randNumberOne[i] = Math.floor(Math.random() * itemList.length - 1);
   }
   console.log(randNumberOne);
   numberChecker();
   randNumArrayOne = false;
-  }
-  else {
-    for (i = 0; i < 3; i++){
-    randNumberTwo[i] = Math.floor(Math.random() * itemList.length -1);
+}
+else {
+  for (i = 0; i < 3; i++) {
+    randNumberTwo[i] = Math.floor(Math.random() * itemList.length - 1);
   }
   console.log(randNumberTwo);
   numberChecker();
   randNumArrayOne = true;
 }
-//Check arrays vs. themselves and the other
-function numberChecker(){
-  if (randNumberOne[0] === randNumberOne [1] || randNumberOne[0] === randNumberOne[2] || randNumberOne[1] === randNumberOne[2]){
-  getNumbers();
-  }
-  else if (randNumberTwo[0] === randNumberTwo [1] || randNumberTwo[0] === randNumberTwo[2] || randNumberTwo[1] === randNumberTwo[2]){
-    getNumbers();
-  }
-  else if (randNumberOne[0] === randNumberTwo [0] || randNumberOne[0] === randNumberTwo[1] || randNumberOne[0] === randNumberTwo[2]){
-  getNumbers();
 }
-  else if (randNumberOne[1] === randNumberTwo [0] || randNumberOne[1] === randNumberTwo[1] || randNumberOne[1] === randNumberTwo[2]){
+//Check arrays vs. themselves and the other
+function numberChecker() {
+  if (randNumberOne[0] === randNumberOne[1] || randNumberOne[0] === randNumberOne[2] || randNumberOne[1] === randNumberOne[2]) {
     getNumbers();
   }
-  else if (randNumberOne[2] === randNumberTwo [0] || randNumberOne[2] === randNumberTwo[1] || randNumberOne[2] === randNumberTwo[2]){
-  getNumbers();
+  else if (randNumberTwo[0] === randNumberTwo[1] || randNumberTwo[0] === randNumberTwo[2] || randNumberTwo[1] === randNumberTwo[2]) {
+    getNumbers();
   }
-  else{
+  else if (randNumberOne[0] === randNumberTwo[0] || randNumberOne[0] === randNumberTwo[1] || randNumberOne[0] === randNumberTwo[2]) {
+    getNumbers();
+  }
+  else if (randNumberOne[1] === randNumberTwo[0] || randNumberOne[1] === randNumberTwo[1] || randNumberOne[1] === randNumberTwo[2]) {
+    getNumbers();
+  }
+  else if (randNumberOne[2] === randNumberTwo[0] || randNumberOne[2] === randNumberTwo[1] || randNumberOne[2] === randNumberTwo[2]) {
+    getNumbers();
+  }
+  else {
     console.log(`Passed Check`)
   }
-function renderImgs(){
-  let imgOneIndex = randomItemNumber();
-  let imgTwoIndex = randomItemNumber();
-  let imgThreeIndex = randomItemNumber();
-
-
-  // Log imgs into array 1 for checking against each other
-
-  // check numbers against array 2 and display
-
-  // swap to array one
-
-
-
-while (imgOneIndex === imgTwoIndex){
-  imgTwoIndex = randomItemNumber();
 }
-while (imgTwoIndex === imgThreeIndex){
-  imgThreeIndex = randomItemNumber();
-}
+function renderImgs() {
+  getNumbers();
+  if (randNumArrayOne = true) {
+    let imgOneIndex = randNumberOne[0];
+    let imgTwoIndex = randNumberOne[1];
+    let imgThreeIndex = randNumberOne[2];
+    
+    imgOne.src = allItems[imgOneIndex].src;
+    imgOne.alt = allItems[imgOneIndex].name;
+    allItems[imgOneIndex].shown++
+    
+    imgTwo.src = allItems[imgTwoIndex].src;
+    imgTwo.alt = allItems[imgTwoIndex].name;
+    allItems[imgTwoIndex].shown++
 
-  imgOne.src = allItems[imgOneIndex].src;
-  imgOne.alt = allitems[imgOneIndex].name;
-  allItems[imgOneIndex].shown++
+    imgThree.src = allItems[imgThreeIndex].src;
+    imgThree.alt = allItems[imgThreeIndex].name;
+    allItems[imgThreeIndex].shown++
+  }
+  else if (randNumArrayOne = false) {
+    let imgOneIndex = allItems[randNumberTwo[0]];
+    let imgTwoIndex = allItems[randNumberTwo[1]];
+    let imgThreeIndex = allItems[randNumberTwo[2]];
 
-  imgTwo.src = allItems[imgTwoIndex].src;
-  imgTwo.alt = allitems[imgTwoIndex].name;
-  allItems[imgTwoIndex].shown++
+    imgOne.src = allItems[imgOneIndex].src;
+    imgOne.alt = allitems[imgOneIndex].name;
+    allItems[imgOneIndex].shown++
 
-  imgThree.src = allItems[imgThreeIndex].src;
-  imgThree.alt = allitems[imgThreeIndex].name;
-  allItems[imgThreeIndex].shown++
-
+    imgTwo.src = allItems[imgTwoIndex].src;
+    imgTwo.alt = allitems[imgTwoIndex].name;
+    allItems[imgTwoIndex].shown++
+    
+    imgThree.src = allItems[imgThreeIndex].src;
+    imgThree.alt = allitems[imgThreeIndex].name;
+    allItems[imgThreeIndex].shown++
+  }
 }
 
 renderImgs();
 
 //Event listener
-function handleClick(event){
+function handleClick(event) {
   let imgClicked = event.target.alt;
   for (i = 0; i < allItems.length; i++)
-  if (imgClicked === allItems[i].name){
-    allitems[i].votes++;
-  }
+    if (imgClicked === allItems[i].name) {
+      allitems[i].votes++;
+    }
+  totalVotes++
   renderImgs();
 }
 
 voteBox.addEventListener('click', handleClick);
 
 //Event button 2 rendering list items
-function handleShowResults(){
-  if(votes === 0){
-    for ( i = 0; 1 < allItems; i++){
+function handleShowResults() {
+  if (totalVotes === 25) {
+    voteBox.removeEventHandler('click', handleClick);
+    for (i = 0; 1 < allItems; i++) {
       let list = document.createElement('li');
       list.textContent = `${allItems[i].name} was seen ${allItems[i].views} and chosen ${allItems[i]} times.`;
-      /*location of ul*/.appendChild(list);
+      results.appendChild(list);
+      resultButton.removeEventListener('click', handleShowResults)
     }
+  }
+  else if (totalVotes < 25) {
+    alert(`Please finish the survey you have ${totalVotes - 25} selections left.`)
   }
 }
 
-showButton.addEventListener(click, handleShowResults)
+let resultButton = document.getElementById('resultsbutton')
+resultButton.addEventListener('click', handleShowResults)

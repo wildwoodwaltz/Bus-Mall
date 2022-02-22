@@ -8,19 +8,19 @@ let voteBox = document.getElementById('votebox');
 let randNumberOne = [NaN,NaN,NaN];
 let randNumberTwo = [NaN,NaN,NaN];
 let randNumArrayOne = true;
-let totalVotes = 0;
+let totalVotes = 25;
 
 //data storage
 let allItems = []
 let itemList = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'unicorn', 'water-can', 'wine-glass']
 // Constructor
 
-function Items(itemName, fileExtension = 'jpg') {
-  this.itemName = itemName;
-  this.src = `img/${itemName}.${fileExtension}`;
-  this.alt = `${itemName}`;
+function Items(name, fileExtension = 'jpg') {
+  this.name = name;
+  this.src = `img/${name}.${fileExtension}`;
+  this.alt = `${name}`;
   this.shown = 0;
-  this.clicks = 0;
+  this.votes = 0;
   allItems.push(this);
 }
 
@@ -31,13 +31,13 @@ function renderNewItems() {
   }
 }
 renderNewItems();
-new Items('sweep', 'png')
+new Items('sweep', fileExtension = 'png')
 console.log(allItems)
 
 function getNumbers(){
   if (randNumArrayOne === true) {
     for (i = 0; i < 3; i++) {
-    randNumberOne[i] = Math.floor(Math.random() * itemList.length);
+    randNumberOne[i] = Math.floor(Math.random() * allItems.length);
   }
   numberChecker();
   console.log(randNumberOne);
@@ -45,7 +45,7 @@ function getNumbers(){
 }
 else {
   for (i = 0; i < 3; i++) {
-    randNumberTwo[i] = Math.floor(Math.random() * itemList.length);
+    randNumberTwo[i] = Math.floor(Math.random() * allItems.length);
   }
   numberChecker();
   console.log(randNumberTwo);
@@ -100,36 +100,37 @@ function renderImgs() {
 }
 
 renderImgs();
+function handleClick(event){
+  totalVotes--;
 
-//Event listener
-function handleClick(event) {
   let imgClicked = event.target.alt;
-  for (i = 0; i < allItems.length; i++)
-    if (imgClicked === allItems[i].itemName) {
-      allItems[i].clicks++;
+
+  for(let i = 0; i < allItems.length; i++){
+    if(imgClicked === allItems[i].name){
+      allItems[i].votes++;
     }
-  totalVotes++
+  }
   renderImgs();
-  if (totalVotes === 25){
+  if(totalVotes === 0){
     voteBox.removeEventListener('click', handleClick);
   }
 }
-
 voteBox.addEventListener('click', handleClick);
+//Event listener
+
 
 //Event button 2 rendering list items
 function handleShowResults() {
-  if (totalVotes === 25) {
+  if (totalVotes === 0) {
     for (i = 0; 1 < allItems.length; i++) {
-      let object = allItems[i];
       let list = document.createElement('li');
-      list.textContent = `${object.itemName} was seen ${object.shown} and chosen ${object.clicks} times.`;
+      list.textContent = `${allItems[i].itemName} was seen ${allItems[i].shown} times and chosen ${allItems[i].votes} times.`;
       results.appendChild(list);
       resultButton.removeEventListener('click', handleShowResults)
     }
   }
-  else if (totalVotes < 25) {
-    alert(`Please finish the survey you have ${25 - totalVotes} selections left.`)
+  else if (totalVotes > 0) {
+    alert(`Please finish the survey you have $ totalVotes} selections left.`)
   }
 }
 

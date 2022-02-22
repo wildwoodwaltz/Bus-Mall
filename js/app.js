@@ -3,7 +3,7 @@
 let imgOne = document.getElementById('img-one');
 let imgTwo = document.getElementById('img-two');
 let imgThree = document.getElementById('img-three');
-let results = document.getElementById('talley');
+let results = document.getElementById('tally');
 let voteBox = document.getElementById('votebox');
 let randNumberOne = [NaN,NaN,NaN];
 let randNumberTwo = [NaN,NaN,NaN];
@@ -37,18 +37,18 @@ console.log(allItems)
 function getNumbers(){
   if (randNumArrayOne === true) {
     for (i = 0; i < 3; i++) {
-    randNumberOne[i] = Math.floor(Math.random() * itemList.length - 1);
+    randNumberOne[i] = Math.floor(Math.random() * itemList.length);
   }
-  console.log(randNumberOne);
   numberChecker();
+  console.log(randNumberOne);
   randNumArrayOne = false;
 }
 else {
   for (i = 0; i < 3; i++) {
-    randNumberTwo[i] = Math.floor(Math.random() * itemList.length - 1);
+    randNumberTwo[i] = Math.floor(Math.random() * itemList.length);
   }
-  console.log(randNumberTwo);
   numberChecker();
+  console.log(randNumberTwo);
   randNumArrayOne = true;
 }
 }
@@ -118,10 +118,13 @@ function handleClick(event) {
   let imgClicked = event.target.alt;
   for (i = 0; i < allItems.length; i++)
     if (imgClicked === allItems[i].name) {
-      allitems[i].votes++;
+      allitems[i].clicks++;
     }
   totalVotes++
   renderImgs();
+  if (totalVotes === 25){
+    voteBox.removeEventListener('click', handleClick);
+  }
 }
 
 voteBox.addEventListener('click', handleClick);
@@ -129,16 +132,16 @@ voteBox.addEventListener('click', handleClick);
 //Event button 2 rendering list items
 function handleShowResults() {
   if (totalVotes === 25) {
-    voteBox.removeEventHandler('click', handleClick);
-    for (i = 0; 1 < allItems; i++) {
+    for (i = 0; 1 < allItems.length; i++) {
+      let object = allItems[i];
       let list = document.createElement('li');
-      list.textContent = `${allItems[i].name} was seen ${allItems[i].views} and chosen ${allItems[i]} times.`;
+      list.textContent = `${object.itemName} was seen ${object.shown} and chosen ${object.clicks} times.`;
       results.appendChild(list);
       resultButton.removeEventListener('click', handleShowResults)
     }
   }
   else if (totalVotes < 25) {
-    alert(`Please finish the survey you have ${totalVotes - 25} selections left.`)
+    alert(`Please finish the survey you have ${25 - totalVotes} selections left.`)
   }
 }
 

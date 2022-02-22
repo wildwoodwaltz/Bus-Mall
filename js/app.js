@@ -5,8 +5,8 @@ let imgTwo = document.getElementById('img-two');
 let imgThree = document.getElementById('img-three');
 let results = document.getElementById('tally');
 let voteBox = document.getElementById('votebox');
-let randNumberOne = [NaN,NaN,NaN];
-let randNumberTwo = [NaN,NaN,NaN];
+let randNumberOne = [NaN, NaN, NaN];
+let randNumberTwo = [NaN, NaN, NaN];
 let randNumArrayOne = true;
 let totalVotes = 25;
 
@@ -34,23 +34,23 @@ renderNewItems();
 new Items('sweep', fileExtension = 'png')
 console.log(allItems)
 
-function getNumbers(){
+function getNumbers() {
   if (randNumArrayOne === true) {
     for (i = 0; i < 3; i++) {
-    randNumberOne[i] = Math.floor(Math.random() * allItems.length);
+      randNumberOne[i] = Math.floor(Math.random() * allItems.length);
+    }
+    numberChecker();
+    console.log(randNumberOne);
+    randNumArrayOne = false;
   }
-  numberChecker();
-  console.log(randNumberOne);
-  randNumArrayOne = false;
-}
-else {
-  for (i = 0; i < 3; i++) {
-    randNumberTwo[i] = Math.floor(Math.random() * allItems.length);
+  else {
+    for (i = 0; i < 3; i++) {
+      randNumberTwo[i] = Math.floor(Math.random() * allItems.length);
+    }
+    numberChecker();
+    console.log(randNumberTwo);
+    randNumArrayOne = true;
   }
-  numberChecker();
-  console.log(randNumberTwo);
-  randNumArrayOne = true;
-}
 }
 //Check arrays vs. themselves and the other
 function numberChecker() {
@@ -67,11 +67,11 @@ function renderImgs() {
     let imgOneIndex = randNumberOne[0];
     let imgTwoIndex = randNumberOne[1];
     let imgThreeIndex = randNumberOne[2];
-    
+
     imgOne.src = allItems[imgOneIndex].src;
     imgOne.alt = allItems[imgOneIndex].name;
     allItems[imgOneIndex].shown++
-    
+
     imgTwo.src = allItems[imgTwoIndex].src;
     imgTwo.alt = allItems[imgTwoIndex].name;
     allItems[imgTwoIndex].shown++
@@ -92,7 +92,7 @@ function renderImgs() {
     imgTwo.src = allItems[imgTwoIndex].src;
     imgTwo.alt = allItems[imgTwoIndex].name;
     allItems[imgTwoIndex].shown++
-    
+
     imgThree.src = allItems[imgThreeIndex].src;
     imgThree.alt = allItems[imgThreeIndex].name;
     allItems[imgThreeIndex].shown++
@@ -100,18 +100,18 @@ function renderImgs() {
 }
 
 renderImgs();
-function handleClick(event){
+function handleClick(event) {
   totalVotes--;
 
   let imgClicked = event.target.alt;
 
-  for(let i = 0; i < allItems.length; i++){
-    if(imgClicked === allItems[i].name){
+  for (let i = 0; i < allItems.length; i++) {
+    if (imgClicked === allItems[i].name) {
       allItems[i].votes++;
     }
   }
   renderImgs();
-  if(totalVotes === 0){
+  if (totalVotes === 0) {
     voteBox.removeEventListener('click', handleClick);
   }
 }

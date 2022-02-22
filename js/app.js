@@ -86,15 +86,15 @@ function renderImgs() {
     let imgThreeIndex = allItems[randNumberTwo[2]];
 
     imgOne.src = allItems[imgOneIndex].src;
-    imgOne.alt = allitems[imgOneIndex].name;
+    imgOne.alt = allItems[imgOneIndex].name;
     allItems[imgOneIndex].shown++
 
     imgTwo.src = allItems[imgTwoIndex].src;
-    imgTwo.alt = allitems[imgTwoIndex].name;
+    imgTwo.alt = allItems[imgTwoIndex].name;
     allItems[imgTwoIndex].shown++
     
     imgThree.src = allItems[imgThreeIndex].src;
-    imgThree.alt = allitems[imgThreeIndex].name;
+    imgThree.alt = allItems[imgThreeIndex].name;
     allItems[imgThreeIndex].shown++
   }
 }
@@ -106,7 +106,7 @@ function handleClick(event) {
   let imgClicked = event.target.alt;
   for (i = 0; i < allItems.length; i++)
     if (imgClicked === allItems[i].itemName) {
-      allitems[i].clicks++;
+      allItems[i].clicks++;
     }
   totalVotes++
   renderImgs();

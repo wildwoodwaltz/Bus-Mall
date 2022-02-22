@@ -54,19 +54,7 @@ else {
 }
 //Check arrays vs. themselves and the other
 function numberChecker() {
-  if (randNumberOne[0] === randNumberOne[1] || randNumberOne[0] === randNumberOne[2] || randNumberOne[1] === randNumberOne[2]) {
-    getNumbers();
-  }
-  else if (randNumberTwo[0] === randNumberTwo[1] || randNumberTwo[0] === randNumberTwo[2] || randNumberTwo[1] === randNumberTwo[2]) {
-    getNumbers();
-  }
-  else if (randNumberOne[0] === randNumberTwo[0] || randNumberOne[0] === randNumberTwo[1] || randNumberOne[0] === randNumberTwo[2]) {
-    getNumbers();
-  }
-  else if (randNumberOne[1] === randNumberTwo[0] || randNumberOne[1] === randNumberTwo[1] || randNumberOne[1] === randNumberTwo[2]) {
-    getNumbers();
-  }
-  else if (randNumberOne[2] === randNumberTwo[0] || randNumberOne[2] === randNumberTwo[1] || randNumberOne[2] === randNumberTwo[2]) {
+  if (randNumberOne[0] === randNumberOne[1] || randNumberOne[0] === randNumberOne[2] || randNumberOne[1] === randNumberOne[2] || randNumberTwo[0] === randNumberTwo[1] || randNumberTwo[0] === randNumberTwo[2] || randNumberTwo[1] === randNumberTwo[2] || randNumberOne[0] === randNumberTwo[0] || randNumberOne[0] === randNumberTwo[1] || randNumberOne[0] === randNumberTwo[2] || randNumberOne[1] === randNumberTwo[0] || randNumberOne[1] === randNumberTwo[1] || randNumberOne[1] === randNumberTwo[2] || randNumberOne[2] === randNumberTwo[0] || randNumberOne[2] === randNumberTwo[1] || randNumberOne[2] === randNumberTwo[2]) {
     getNumbers();
   }
   else {
@@ -117,7 +105,7 @@ renderImgs();
 function handleClick(event) {
   let imgClicked = event.target.alt;
   for (i = 0; i < allItems.length; i++)
-    if (imgClicked === allItems[i].name) {
+    if (imgClicked === allItems[i].itemName) {
       allitems[i].clicks++;
     }
   totalVotes++

@@ -22,21 +22,20 @@ function Items(name, fileExtension = 'jpg') {
 
 //img list
 function renderNewItems() {
-  /// use data that has been parsed from LOCAL STOARGE ///
-  if (retrieveData) {
+ /// use data that has been parsed from LOCAL STOARGE ///
+  if (retrieveData){
     allItems = parsedData;
   }
   else {
     for (let i = 0; i < itemList.length; i++) {
       new Items(itemList[i]);
     }
-    renderNewItems();
     new Items('sweep', 'png');
   }
   console.log(allItems);
 }
+renderNewItems();
 ///////End Constructor Function////////////////////
-
 let randomPictureLeft = NaN;
 let randomPictureMid = NaN;
 let randomPictureRight = NaN;
@@ -155,7 +154,7 @@ function renderChart() {
       }]
     },
     options: {
-      axis: 'y',
+      aspectRatio: 5/1,
       scales: {
         y: {
           beginAtZero: true

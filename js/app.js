@@ -1,19 +1,9 @@
-// Global Variables
+'use strict';
 
-let imgOne = document.getElementById('img-one');
-let imgTwo = document.getElementById('img-two');
-let imgThree = document.getElementById('img-three');
-let results = document.getElementById('tally');
-let voteBox = document.getElementById('votebox');
-let randNumberOne = [NaN, NaN, NaN];
-let randNumberTwo = [NaN, NaN, NaN];
-let randNumArrayOne = true;
-let totalVotes = 25;
-
-//data storage
-let allItems = []
+let voteChances = 10;
+let allItems = [];
 let itemList = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'unicorn', 'water-can', 'wine-glass']
-// Constructor
+// Constructor function///////////////////////
 
 function Items(name, fileExtension = 'jpg') {
   this.name = name;
@@ -31,108 +21,128 @@ function renderNewItems() {
   }
 }
 renderNewItems();
-new Items('sweep', fileExtension = 'png')
+new Items('sweep', 'png')
 console.log(allItems)
+///////End Constructor Function////////////////////
 
-function getNumbers() {
-  if (randNumArrayOne === true) {
-    for (i = 0; i < 3; i++) {
-      randNumberOne[i] = Math.floor(Math.random() * allItems.length);
-    }
-    numberChecker();
-    console.log(randNumberOne);
-    randNumArrayOne = false;
-  }
-  else {
-    for (i = 0; i < 3; i++) {
-      randNumberTwo[i] = Math.floor(Math.random() * allItems.length);
-    }
-    numberChecker();
-    console.log(randNumberTwo);
-    randNumArrayOne = true;
-  }
+let randomPictureLeft = NaN;
+let randomPictureMid = NaN;
+let randomPictureRight = NaN;
+let lastRound = [NaN, NaN, NaN]
+
+/////// Start DOM elements/////////////
+
+let header = document.getElementById('title');
+let voteBox = document.getElementById('votebox');
+let chart = document.getElementById('chart');
+let leftHTMLImage = document.getElementById('img-one');
+let midHTMLImage = document.getElementById('img-two');
+let rightHTMLImage = document.getElementById('img-three');
+
+///////End DOM Elements////////////////
+/////// Random Grabber ///////
+
+///////Start Image Generation from list///////////////
+function generateNum() {
+  randomPictureLeft = Math.floor(Math.random() * allItems.length);
+  randomPictureMid = Math.floor(Math.random() * allItems.length);
+  randomPictureRight = Math.floor(Math.random() * allItems.length);
+  console.log(`${randomPictureLeft}, ${randomPictureMid}, ${randomPictureRight}`);
+  checkDuplicate();
 }
-//Check arrays vs. themselves and the other
-function numberChecker() {
-  if (randNumberOne[0] === randNumberOne[1] || randNumberOne[0] === randNumberOne[2] || randNumberOne[1] === randNumberOne[2] || randNumberTwo[0] === randNumberTwo[1] || randNumberTwo[0] === randNumberTwo[2] || randNumberTwo[1] === randNumberTwo[2] || randNumberOne[0] === randNumberTwo[0] || randNumberOne[0] === randNumberTwo[1] || randNumberOne[0] === randNumberTwo[2] || randNumberOne[1] === randNumberTwo[0] || randNumberOne[1] === randNumberTwo[1] || randNumberOne[1] === randNumberTwo[2] || randNumberOne[2] === randNumberTwo[0] || randNumberOne[2] === randNumberTwo[1] || randNumberOne[2] === randNumberTwo[2]) {
-    getNumbers();
+///////// Duplicate checker part of the function///////
+function checkDuplicate() {
+  while (randomPictureLeft === randomPictureMid ||
+    randomPictureLeft === randomPictureRight || randomPictureMid === randomPictureRight ||
+    lastRound.includes(randomPictureLeft) ||
+    lastRound.includes(randomPictureMid) ||
+    lastRound.includes(randomPictureRight)
+  ) {
+    randomPictureLeft = Math.floor(Math.random() * allItems.length);
+    randomPictureMid = Math.floor(Math.random() * allItems.length);
+    randomPictureRight = Math.floor(Math.random() * allItems.length);
   }
-  else {
-    console.log(`Passed Check`)
-  }
+  lastRound = [randomPictureLeft, randomPictureMid, randomPictureRight];
 }
+
 function renderImgs() {
-  getNumbers();
-  if (randNumArrayOne = true) {
-    let imgOneIndex = randNumberOne[0];
-    let imgTwoIndex = randNumberOne[1];
-    let imgThreeIndex = randNumberOne[2];
+  generateNum();
+  leftHTMLImage.src = allItems[randomPictureLeft].src;
+  leftHTMLImage.alt = allItems[randomPictureLeft].name;
+  allItems[randomPictureLeft].shown++;
 
-    imgOne.src = allItems[imgOneIndex].src;
-    imgOne.alt = allItems[imgOneIndex].name;
-    allItems[imgOneIndex].shown++
+  midHTMLImage.src = allItems[randomPictureMid].src;
+  midHTMLImage.alt = allItems[randomPictureMid].name;
+  allItems[randomPictureMid].shown++;
 
-    imgTwo.src = allItems[imgTwoIndex].src;
-    imgTwo.alt = allItems[imgTwoIndex].name;
-    allItems[imgTwoIndex].shown++
-
-    imgThree.src = allItems[imgThreeIndex].src;
-    imgThree.alt = allItems[imgThreeIndex].name;
-    allItems[imgThreeIndex].shown++
-  }
-  else if (randNumArrayOne = false) {
-    let imgOneIndex = allItems[randNumberTwo[0]];
-    let imgTwoIndex = allItems[randNumberTwo[1]];
-    let imgThreeIndex = allItems[randNumberTwo[2]];
-
-    imgOne.src = allItems[imgOneIndex].src;
-    imgOne.alt = allItems[imgOneIndex].name;
-    allItems[imgOneIndex].shown++
-
-    imgTwo.src = allItems[imgTwoIndex].src;
-    imgTwo.alt = allItems[imgTwoIndex].name;
-    allItems[imgTwoIndex].shown++
-
-    imgThree.src = allItems[imgThreeIndex].src;
-    imgThree.alt = allItems[imgThreeIndex].name;
-    allItems[imgThreeIndex].shown++
-  }
+  rightHTMLImage.src = allItems[randomPictureRight].src;
+  rightHTMLImage.alt = allItems[randomPictureRight].name;
+  allItems[randomPictureRight].shown++;
 }
-
+////////End Duplicate Checker and generation function/////////
+////////CALL FOR INITIAL RENDER////////
 renderImgs();
-function handleClick(event) {
-  totalVotes--;
-
-  let imgClicked = event.target.alt;
-
+////////End Render Call////////
+////////Start Event Listener/Execution on click/////
+function handleVote(e) {
+  voteChances--;
+  let imgClicked = e.target.alt;
   for (let i = 0; i < allItems.length; i++) {
     if (imgClicked === allItems[i].name) {
       allItems[i].votes++;
     }
   }
   renderImgs();
-  if (totalVotes === 0) {
-    voteBox.removeEventListener('click', handleClick);
+
+  if (voteChances === 0) {
+    voteBox.removeEventListener('click', handleVote);
+    renderChart();
   }
 }
-voteBox.addEventListener('click', handleClick);
-//Event listener
+voteBox.addEventListener('click', handleVote);
 
-
-//Event button 2 rendering list items
-function handleShowResults() {
-  if (totalVotes === 0) {
-    for (i = 0; 1 < allItems.length; i++) {
-      let list = document.createElement('li');
-      list.textContent = `${allItems[i].itemName} was seen ${allItems[i].shown} times and chosen ${allItems[i].votes} times.`;
-      results.appendChild(list);
-      resultButton.removeEventListener('click', handleShowResults)
+function renderChart() {
+let names = [];
+let totalVotes = [];
+let timesShown = [];
+  for (let i = 0; i < allItems.length; i++) {
+    names.push(allItems[i].name);
+    console.log(names);
+    totalVotes.push(allItems[i].votes);
+    console.log(totalVotes);
+    timesShown.push(allItems[i].shown);
+    console.log(timesShown);
     }
-  }
-  else if (totalVotes > 0) {
-    alert(`Please finish the survey you have $ totalVotes} selections left.`)
-  }
+  const ctx = document.getElementById('chart').getContext('2d');
+  const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: names,
+      datasets: [{
+        label: '# of Votes',
+        data: totalVotes,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)'
+        ],
+        borderWidth: 1
+      },
+      {
+        label: '# of times Shown',
+        data: timesShown,
+        backgroundColor: ['rgba(54, 162, 235, 0.2)'],
+        borderColor: ['rgba(54, 162, 235, 1)'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
 }
-
-let resultButton = document.getElementById('resultsbutton')
-resultButton.addEventListener('click', handleShowResults)

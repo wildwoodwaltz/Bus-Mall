@@ -1,4 +1,23 @@
+body {
+ grid-template-columns: [c1] 1fr [c2] 1fr [c3] 1fr [c4] 1fr;
+ grid-template-rows: [row1] 1fr [row2] 1fr [row3] 2.5fr [row4] 1.5fr [row5] 1fr;
+ grid-template-areas:
+  "header header header header"
+  "chart . title ."
+  "results img1 img2 img3"
+  "results . . ."
+  "footer footer footer footer";
+}
+header {
+    grid-area: header;
+    width: 90%;
+}
+header img{
+
+}
+
 .img {
   max-width: 250px;
   max-height: 250px;
+  object-fit: contain;
 }

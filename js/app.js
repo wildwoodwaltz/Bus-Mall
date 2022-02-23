@@ -2,9 +2,15 @@
 
 let voteChances = 10;
 let allItems = [];
-let itemList = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'unicorn', 'water-can', 'wine-glass']
-// Constructor function///////////////////////
+let itemList = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
+/// local storage///
+let retrieveData = localStorage.getItem('itemData')
+console.log(retrieveData);
+// parse data
+let parsedData = JSON.parse(retrieveData);
 
+
+// Constructor function///////////////////////
 function Items(name, fileExtension = 'jpg') {
   this.name = name;
   this.src = `img/${name}.${fileExtension}`;
@@ -16,19 +22,25 @@ function Items(name, fileExtension = 'jpg') {
 
 //img list
 function renderNewItems() {
-  for (let i = 0; i < itemList.length; i++) {
-    new Items(itemList[i])
+  /// use data that has been parsed from LOCAL STOARGE ///
+  if (retrieveData) {
+    allItems = parsedData;
   }
+  else {
+    for (let i = 0; i < itemList.length; i++) {
+      new Items(itemList[i]);
+    }
+    renderNewItems();
+    new Items('sweep', 'png');
+  }
+  console.log(allItems);
 }
-renderNewItems();
-new Items('sweep', 'png')
-console.log(allItems)
 ///////End Constructor Function////////////////////
 
 let randomPictureLeft = NaN;
 let randomPictureMid = NaN;
 let randomPictureRight = NaN;
-let lastRound = [NaN, NaN, NaN]
+let lastRound = [NaN, NaN, NaN];
 
 /////// Start DOM elements/////////////
 
@@ -96,15 +108,20 @@ function handleVote(e) {
 
   if (voteChances === 0) {
     voteBox.removeEventListener('click', handleVote);
+    let stringifiedData = JSON.stringify(allItems);
+    console.log('stringifiedData', stringifiedData);
+
+    localStorage.setItem('itemData', stringifiedData);
+
     renderChart();
   }
 }
 voteBox.addEventListener('click', handleVote);
 
 function renderChart() {
-let names = [];
-let totalVotes = [];
-let timesShown = [];
+  let names = [];
+  let totalVotes = [];
+  let timesShown = [];
   for (let i = 0; i < allItems.length; i++) {
     names.push(allItems[i].name);
     console.log(names);
@@ -112,7 +129,7 @@ let timesShown = [];
     console.log(totalVotes);
     timesShown.push(allItems[i].shown);
     console.log(timesShown);
-    }
+  }
   const ctx = document.getElementById('chart').getContext('2d');
   const myChart = new Chart(ctx, {
     type: 'bar',
@@ -122,7 +139,7 @@ let timesShown = [];
         label: '# of Votes',
         data: totalVotes,
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)'
+          'rgba(255, 99, 132, 0.3)'
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)'
@@ -138,6 +155,7 @@ let timesShown = [];
       }]
     },
     options: {
+      axis: 'y',
       scales: {
         y: {
           beginAtZero: true

@@ -1,6 +1,6 @@
 'use strict';
 
-let voteChances = 10;
+let voteChances = 25;
 let allItems = [];
 let itemList = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
 /// local storage///

@@ -1,7 +1,12 @@
 'use strict';
 
+// Set Global variables
+
+//How many votes
 let voteChances = 25;
+//Container for contructor to push to
 let allItems = [];
+// Item list for constructor function
 let itemList = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
 /// local storage///
 let retrieveData = localStorage.getItem('itemData')
@@ -116,7 +121,7 @@ function handleVote(e) {
   }
 }
 voteBox.addEventListener('click', handleVote);
-
+//// Rendering Graphic Chart using Chart.js
 function renderChart() {
   let names = [];
   let totalVotes = [];
@@ -137,12 +142,8 @@ function renderChart() {
       datasets: [{
         label: '# of Votes',
         data: totalVotes,
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.3)'
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)'
-        ],
+        backgroundColor: ['rgba(255, 99, 132, 0.3)'],
+        borderColor: ['rgba(255, 99, 132, 1)'],
         borderWidth: 1
       },
       {

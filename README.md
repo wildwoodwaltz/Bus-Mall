@@ -16,6 +16,7 @@ v.1.2 - Added local storage and Styling to CSS
 - [Google Font - PLay Ball](https://fonts.google.com/specimen/Playball?query=playball)
 - [CSS Reference MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference)
 - [Grid Cheat Sheet](https://css-tricks.com/snippets/css/complete-guide-grid/)
+- [chart.js](https://www.chartjs.org/)
 
 ## Reflections and Comments
 
